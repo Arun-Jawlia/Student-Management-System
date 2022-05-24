@@ -1,0 +1,14 @@
+form input{
+    display: block;
+    margin: 10px 0px;
+    padding: 5px;
+}
+
+
+#dash{
+    border: 1px solid black;
+    padding: 10px;
+    background-color: teal;
+    color: white;
+    width: 94%;
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        #container{
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            grid-template-rows: auto;
+            width: 90%;
+            gap: 15px;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1><a href="home.html">Home</a></h1>
+    <h3>DASHBOARD</h3>
+    <div id="container">
+        <!-- Append Code here -->
+    </div>
+</body>
+
+</html>
+
+<script>
+    let data = JSON.parse(localStorage.getItem('studentData'))
+    // console.log(data)
+
+    display(data)
+    function display(data)
+    {
+        document.querySelector("#container").innerHTML=""
+        data.forEach(function(elem,index)
+        {
+            let div = document.createElement("div")
+            
+            let img = document.createElement("img")
+            img.src = elem.image
+
+            let h2= document.createElement("h2")
+            h2.innerText=elem.name
+
+            let ptag = document.createElement("p")
+            ptag.innerText=elem.course
+
+            let p2tag = document.createElement("p")
+            p2tag.innerText=elem.batch
+
+            let p3tag = document.createElement("p")
+            p3tag.innerText=elem.unit
+
+            let removebtn = document.createElement("button")
+            removebtn.innerText="Remove"
+            removebtn.addEventListener('click', function()
+            {
+                // removeFunction(elem,index)
+                trashfun(index)
+
+            })
+
+            div.append(img,h2,ptag,p2tag,p3tag,removebtn)
+            document.querySelector("#container").append(div)
+        })
+    }
+
+    function trashfun(index)
+    {
+        let Data = JSON.parse(localStorage.getItem("studentData")) || []
+        
+        let newTrash = Data.filter(function(el,i)
+        {
+            if(i===index)
+            {
+                var trash = JSON.parse(localStorage.getItem("trash")) || []
+                trash.push(el)
+                localStorage.setItem('trash', JSON.stringify(trash))
+            }
+            else
+            {
+                return i!=index
+            }
+            
+           
+        })
+        localStorage.setItem('studentData',JSON.stringify(newTrash))
+        display(newTrash)
+        
+    }
+    
+    
+    
+    
+</script>

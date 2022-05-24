@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <h1>Student Management System</h1>
+    <h2><a href="dashboard.html">Dashboard</a></h2>
+
+    <div id="dash"></div>
+    <form id="form">
+
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter Your Name">
+        <label for="course">Course</label>
+        <input type="text" id="course" placeholder="Enter Your Course">
+        <label for="unit">Unit</label>
+        <input type="number" name="" id="unit" placeholder="Enter Your Unit">
+        <label for="batch">Batch </label>
+        <input type="number" id="batch" placeholder="Enter Your Batch">
+        <label for="image">Image</label>
+        <input type="url" id="image" placeholder="Enter Your Image(URL)">
+        <input type="submit">
+    </form>
+    
+</body>
+</html>
+
+<script>
+    let form = document.querySelector("form")
+    form.addEventListener("submit", function()
+    {
+        studentDetail(event)
+    })
+
+    function Student(n,c,u,b,i)
+    {
+        this.name = n
+        this.course = c
+        this.unit = u
+        this.batch = `Ft-Web${b}`
+        this.image= i
+    }
+
+    function studentDetail(event)
+    {
+        event.preventDefault()
+
+        let form = document.querySelector("#form")
+        let name = form.name.value
+        let  course = form.course.value
+        let unit = form.unit.value
+        let batch = form.batch.value
+        let image  = form.image.value
+
+
+        let s1 = new Student(name, course, unit, batch,image)
+        // console.log(s1)
+
+        let data = JSON.parse(localStorage.getItem('studentData')) || []
+        data.push(s1)
+
+        localStorage.setItem('studentData', JSON.stringify(data))
+        window.location.reload()
+
+    }
+
+
+    function calculateStudent()
+    {
+        let data = JSON.parse(localStorage.getItem('studentData')) || []
+        let obj ={}
+        for(var i=0;i<data.length;i++)
+        {
+            if(obj[data[i].batch]==undefined)
+            {
+                obj[data[i].batch]=0
+            }
+            
+            
+        }
+
+        for(i=0; i<data.length; i++)
+        {
+            obj[data[i].batch]++
+        }
+        
+        
+    
+        var arr = []
+        // localStorage.setItem("obj", JSON.stringify(obj))
+        for(var key in obj)
+        {
+         arr.push( " "+key+"-"+obj[key]+ " " )   
+            
+        }
+        document.querySelector("#dash").innerHTML= arr.join("|")
+    }
+    calculateStudent()
+
+
+
+
+</script>
